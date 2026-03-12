@@ -546,7 +546,7 @@ function dTd(key){
   var ins=[0,1,2].map(function(i){
     var cur=S.drv[key][i],def=BASE_DRV[key][i];
     var ch=Math.abs(cur-def)>0.0001;
-    return'<input class="drv-input'+(ch?" changed":"")+'" type="number" step="0.1" min="-50" max="100"'
+    return'<input class="drv-input'+(ch?" changed":"")+'" type="text" inputmode="decimal"'
       +' value="'+(cur*100).toFixed(1)+'" data-k="'+key+'" data-i="'+i+'">';
   }).join("");
   return'<td class="drv-td">'+ins+'</td>';
@@ -750,20 +750,24 @@ function renderBench(){
 // ─────────────────────────────────────────────────────────────────────────────
 function renderOI(){
   var items=[
-    {p:"🔴",id:1,item:"SAR 10M Bank Loan — book ~600-800K annual finance cost in P&L",owner:"Finance / Hossam",impact:"Undisclosed liability = DD deal-breaker",by:"Before pitch"},
-    {p:"🔴",id:2,item:"Related Party Receivable SAR 10.5M — provide elimination schedule",owner:"Finance / Hossam",impact:"WC leakage + BS quality signal",by:"Before pitch"},
+    {p:"🔴",id:1,item:"SAR 10M Bank Loan — book ~600-800K annual finance cost in P&L + BS + CF",owner:"Finance / Hossam",impact:"Undisclosed liability = DD deal-breaker for Havas",by:"Before pitch"},
+    {p:"🔴",id:2,item:"Related Party Receivable SAR 10.5M — provide written elimination schedule",owner:"Finance / Hossam",impact:"WC leakage + BS quality signal",by:"Before pitch"},
     {p:"🔴",id:3,item:"Related Party Payable SAR 5.4M — provide repayment schedule",owner:"Finance / Hossam",impact:"Liability management transparency",by:"Before pitch"},
-    {p:"🔴",id:4,item:"Confirm FY25 OCL SAR 14.5M — includes 10M bank loan?",owner:"Finance / Hossam",impact:"BS may double-count — major DD red flag",by:"Before pitch"},
-    {p:"🟡",id:5,item:"FY26 S&A bonus spike — write 1-sentence investor narrative",owner:"Mansour / CEO",impact:"Looks like structural cost creep",by:"This week"},
-    {p:"🟡",id:6,item:"Captains: confirm Luma AI cost — recurring or one-off?",owner:"Alain Nakhle",impact:"Affects FY27-28 S&A forecast",by:"This week"},
-    {p:"🟡",id:7,item:"Captains GM: write FY25-26 operational turnaround paragraph",owner:"Alain Nakhle",impact:"Two loss years need narrative for Havas",by:"This week"},
-    {p:"🟡",id:8,item:"Teeb GM: provide pipeline for FY26 SAR 6.68M recovery",owner:"Souad Al Merheb",impact:"Recovery looks speculative without evidence",by:"This week"},
-    {p:"🟡",id:9,item:"Reconcile Teeb FY25 NP gap: SAR 24,726 vs BCR",owner:"Hossam",impact:"DD will find the gap — pre-empt it",by:"This week"},
-    {p:"🟡",id:10,item:"Explain Bold Influence FY26 SAR 7.0M < FY25 SAR 8.0M",owner:"Majdi Ghraizi",impact:"Revenue decline in fast-growth BU = red flag",by:"This week"},
-    {p:"🟢",id:11,item:"Confirm Freelance split with Hossam against CoA groups",owner:"Hossam",impact:"Currently estimated from External COS sub-ledger",by:"This week"},
-    {p:"🟢",id:12,item:"Validate Captains AR FY24 = -SAR 752K in Odoo",owner:"Hossam",impact:"Negative AR = data error, explain before BS",by:"Before BS"},
-    {p:"🟢",id:13,item:"Build retainer conversion roadmap — top 10 clients",owner:"CEO / BU GMs",impact:"Retainer % = single biggest valuation driver",by:"Deck v2"},
-    {p:"🟢",id:14,item:"Map each BU to Vision 2030 sector opportunity",owner:"Mansour",impact:"Strengthens Havas strategic rationale",by:"Deck v2"}
+    {p:"🔴",id:4,item:"Confirm FY25 OCL SAR 14.5M — does it include the 10M bank loan?",owner:"Finance / Hossam",impact:"BS may double-count — major DD red flag",by:"Before pitch"},
+    {p:"🟡",id:5,item:"FY26 S&A bonus spike — write 1-sentence investor narrative for deck",owner:"Mansour / CEO",impact:"Looks like structural cost creep without context",by:"This week"},
+    {p:"🟡",id:6,item:"Captains: confirm Luma AI cost — recurring or one-off?",owner:"Alain Nakhle (Captains GM)",impact:"Affects FY27-28 S&A forecast accuracy",by:"This week"},
+    {p:"🟡",id:7,item:"Captains GM: write paragraph on FY25\u219226 operational turnaround story",owner:"Alain Nakhle",impact:"Two consecutive loss years need narrative for Havas",by:"This week"},
+    {p:"🟡",id:8,item:"Teeb GM: provide pipeline supporting FY26 SAR 6.68M revenue recovery",owner:"Souad Al Merheb",impact:"FY26 recovery looks speculative without evidence",by:"This week"},
+    {p:"🟡",id:9,item:"Reconcile Teeb FY25 NP gap: SAR 24,726 discrepancy vs BCR",owner:"Hossam",impact:"DD will find the gap — pre-empt it",by:"This week"},
+    {p:"🟡",id:10,item:"Explain Bold Influence FY26 SAR 7.0M < FY25 SAR 8.0M — revenue dip",owner:"Majdi Ghraizi (Influence GM)",impact:"Revenue decline in fast-growth BU = investor red flag",by:"This week"},
+    {p:"🟡",id:11,item:"Confirm Freelance &amp; Outsourced split with Hossam against CoA groups",owner:"Hossam",impact:"Figure currently estimated from External COS sub-ledger",by:"This week"},
+    {p:"🟢",id:12,item:"Validate Captains AR FY24 = -SAR 752K in Odoo (negative AR = data error)",owner:"Hossam",impact:"Must be explained before BS is shared",by:"Before BS"},
+    {p:"🟢",id:13,item:"Captains capital: Odoo SAR 10K vs model SAR 250K — post capital increase",owner:"Finance",impact:"Havas legal team will flag in legal DD",by:"Before BS"},
+    {p:"🟢",id:14,item:"Clarify FY24-25 Other Reserves (+3.1M, +4.2M) — nature and origin",owner:"Hossam",impact:"Unknown reserves = automatic DD question",by:"Before BS"},
+    {p:"🟢",id:15,item:"Confirm actual FY26-28 capex plan vs SAR 500K model assumption",owner:"Finance",impact:"Affects BS and CF FY26-28",by:"Before BS"},
+    {p:"🟢",id:16,item:"Build retainer conversion roadmap — top 10 project clients to convert",owner:"CEO / BU GMs",impact:"Retainer % is single biggest valuation driver",by:"Deck v2"},
+    {p:"🟢",id:17,item:"Map each BU explicitly to Vision 2030 sector opportunity in deck",owner:"Mansour",impact:"Strengthens Havas strategic rationale",by:"Deck v2"},
+    {p:"🟢",id:18,item:"Add CF reconciliation disclosure note for FY23-25 gaps (Hossam manual adjustments)",owner:"Mansour",impact:"Pre-empts DD question on CF quality",by:"Deck v2"}
   ];
   var done=items.filter(function(r){return S.oi[r.id]==="DONE";}).length;
   var total=items.length;
